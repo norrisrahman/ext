@@ -38,8 +38,32 @@ void tambahData() {
     cout << endl;
 }
 
+int ukuranData (fstream &myFile) {
+    Toko ukuranData;
+    int ukuran;
+
+
+    myFile.open("data.txt", ios::app);
+    myFile >> ukuranData.produk;
+    myFile >> ukuranData.harga;
+    myFile >> ukuranData.stok;
+    
+    while (!myFile.eof()){
+        ukuran++;
+        myFile >> ukuranData.produk;
+        myFile >> ukuranData.harga;
+        myFile >> ukuranData.stok;
+    }
+    return ukuran;
+}
+
 void bacaData() {
-    ifstream myFile;
+    fstream myFile;
+
+    int ukuran = ukuranData(myFile);
+
+    if (ukuran != 0) {
+
     Toko dataToko;
 
     myFile.open("data.txt");
@@ -62,22 +86,11 @@ void bacaData() {
     cout << endl;
     
     myFile.close();
+    }
+    else {
+        return;
+    }
     
-}
-
-int ukuranData (fstream &myFile) {
-    Toko ukuranData;
-    int ukuran, hasilukuran;
-
-
-    myFile.open("data.txt");
-    while (getline(myFile, ukuranData.produk))
-        ukuran++;
-
-    myFile.close();
-
-    hasilukuran = ukuran;
-    return hasilukuran;
 }
 
 void prosesPengurutan(struct Toko arr[], int n){
@@ -128,7 +141,7 @@ void pengurutanData () {
 void simpanData(struct Toko array[], int size) {
 
     fstream myFile;
-    myFile.open("data2.txt", ios::trunc | ios::out);
+    myFile.open("data.txt", ios::trunc | ios::out);
 
     for (int i=0; i < size; i++){
 
@@ -205,7 +218,7 @@ void cariData () {
 
     int size = ukuranData(myFile);
 
-    myFile.open("data2.txt");
+    myFile.open("data.txt");
 
     Toko dataCari [size];
 
