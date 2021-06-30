@@ -198,6 +198,39 @@ void update() {
     pesanError();
 }
 
+void cariData () {
+    string kataKunci;
+
+    fstream myFile;
+
+    int size = ukuranData(myFile);
+
+    myFile.open("data2.txt");
+
+    Toko dataCari [size];
+
+    for(int i = 0; i<size; i++){
+
+        myFile >> dataCari[i].produk;
+        myFile >> dataCari[i].harga;
+        myFile >> dataCari[i].stok;
+    }
+
+    myFile.close();
+
+    cout<<"Masukkan Tanggal Record (dd/mm/yyyy) : ";
+    cin >> kataKunci;
+
+    for(int i=0;i<size;i++) {
+        if(dataCari[i].produk==kataKunci) {
+            cout << "test" << endl;
+            hasilCari(dataCari[i]);
+            return;
+        }
+    }
+    pesanError();
+}
+
 int main() {
     int x;
 
@@ -232,10 +265,19 @@ int main() {
         pengurutanData();
         goto menu;
         break;
+    case 4:
+        system("cls");
+        cariData();
+        goto menu;
+        break;
     case 5:
         system ("cls");
         update();
         goto menu;
+        break;
+    case 6 :
+        system ("cls");
+        atexit;
         break;
     default:
         break;
